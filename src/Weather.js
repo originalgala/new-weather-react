@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-//import ReactAnimatedWeather from "react-animated-weather";
+
 
 export default function Weather() {
   let [city, setCity] = useState("");
@@ -9,6 +9,7 @@ export default function Weather() {
   let [humidity, setHumidity] = useState(null);
   let [wind, setWind] = useState(null);
   let [description, setDescription] = useState(null);
+  let [iconUrl, setIconUrl] = useState(null)
 
   function showTemp(response) {
     console.log(response.data);
@@ -16,6 +17,7 @@ export default function Weather() {
     setDescription(response.data.weather[0].main);
     setHumidity(response.data.main.humidity);
     setWind(response.data.wind.speed);
+    setIconUrl(`https://openweathermap.org/img/w/${response.data.weather[0].icon}.png`);
   }
 
   function displayCity(event) {
@@ -28,7 +30,7 @@ export default function Weather() {
           Description: {description} <br />
           Humidity: {humidity}% <br />
           Wind: {wind} km/h <br />
-        
+         {iconUrl && <img src={iconUrl} alt="Weather Icon" />}
         </div>
       );
     } else {
@@ -50,7 +52,8 @@ export default function Weather() {
         <input type="text" placeholder="Enter city..." onChange={changeCity} />
         <input type="submit" value="search" />
       </form>
-      <div>{display}</div>
+      <div>{display}
+       </div>
     </div>
   );
 }
